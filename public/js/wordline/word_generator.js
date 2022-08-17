@@ -5,7 +5,9 @@ export default class WordGenerator {
     }
 
     generate() {
-        let letters = this.lettersService.getWorstLetters(differentLettersCountInOneLine)
+        let worstLetters = this.lettersService.getWorstLetters(worstLettersCountInOneLine)
+        let randomLetters = this.lettersService.getRandomLetters(randomLettersCountInOneLine)
+        let letters = Array.from(new Set([...worstLetters, ...randomLetters]))
         let words = []
 
         for (let i = 0; i < wordCount; i++) {

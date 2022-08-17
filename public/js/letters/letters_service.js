@@ -36,8 +36,13 @@ export default class LettersService {
     }
 
     getWorstLetters(count) {
-        this.letters.sort((a, b) => this.getScore(a) - this.getScore(b))
-        return this.letters.slice(0, count)
+        let letters = this._shuffle(this.letters);
+        letters.sort((a, b) => this.getScore(a) - this.getScore(b))
+        return letters.slice(0, count)
+    }
+
+    getRandomLetters(count) {
+        return this._shuffle(this.letters).slice(0, count)
     }
 
     getScore(letter) {
@@ -71,5 +76,16 @@ export default class LettersService {
         })
 
         return score
+    }
+
+    _shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            let temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+
+        return array;
     }
 }

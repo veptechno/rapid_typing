@@ -30,7 +30,7 @@ export default class Wordline {
         this.inputline.keypress(e => {
             if (!this.active && e.keyCode === 13) {
                 this.activate()
-                return
+                return false
             }
 
             let timeEnd = Date.now()
@@ -47,7 +47,15 @@ export default class Wordline {
 
             this.timeStart = Date.now();
             this.keyboard.updateColors()
+
+            return isOk
         });
+
+        this.inputline.keydown(e => {
+            if(e.keyCode === 8) {
+                return false
+            }
+        })
     }
 
     highlightMistake() {
@@ -99,7 +107,7 @@ export default class Wordline {
 
         this.wordline.html(markup);
 
-        this.inputline.width(this.wordline.width());
+        setTimeout(() => this.inputline.width(this.wordline.width()), 200)
     }
 
     setFocus() {
