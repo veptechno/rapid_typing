@@ -234,7 +234,7 @@ span.untyped.wrong {
   color: #fff;
   background: #3d3d3d;
   border-radius: 2px;
-  font: bold 14px 'Ubuntu Mono';
+  font: bold 20px 'Ubuntu Mono';
   white-space: nowrap;
   padding: 3px 5px;
   transform: translateY(-140%);
@@ -277,9 +277,8 @@ span.untyped.wrong {
   display: flex;
   justify-content: center;
   align-items: center;
-  font: normal 14px 'Ubuntu Mono';
+  font: normal 20px 'Ubuntu Mono';
   color: #3d3d3d;
-  text-transform: capitalize;
   position: relative;
   transition: background .1s;
 }

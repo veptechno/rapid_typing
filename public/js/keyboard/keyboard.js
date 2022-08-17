@@ -1,70 +1,44 @@
 export default class Keyboard {
-  constructor() {
-    this.root = $('.keyboard-container');
-    this.keys = $('.keyboard-container .key');
-    this.tools = $('.keyboard-toolbar .tool')
-    this.keyTargetClass = 'key-target';
-    this.righthandedSpace = 'righthand';
 
-    this.leftHalf = 'q w e r t a s d f g z x c v b'.split(/\s/);
-
-    this._bindEvents();
-  }
-
-  _bindEvents() {
-    this.tools.filter('#keyboard-toggle').click(e => {
-      this.root.toggleClass('hidden');
-    });
-
-    this.tools.filter('#hands-toggle').click(e => {
-      this.root.toggleClass('non-hands');
-    });
-
-    this.tools.filter('#color-toggle').click(e => {
-      this.root.toggleClass('colorful');
-    });
-  }
-
-  _isUpper(letter) {
-    return letter == letter.toUpperCase()
-  }
-
-  _isIn(array, item) {
-    return array.includes(item);
-  }
-
-  _handForSpace(pressed) {
-    return this.leftHalf.includes(pressed) ? this.righthandedSpace : ''
-  }
-
-  highlight(pressed, toPress) {
-
-    this.keys.removeClass(this.keyTargetClass);
-
-    if(toPress == 'space') {
-      let space = this.keys.filter('#space');
-
-      if(space.hasClass(this.righthandedSpace)) {
-        space.removeClass(this.righthandedSpace);
-      }
-
-      space.addClass(this.keyTargetClass + ' ' + this._handForSpace(pressed));
-    } else {
-
-      let isUpper = this._isUpper(toPress);
-
-      toPress = toPress.toLowerCase();
-
-      if(isUpper) {
-
-        let side = this.leftHalf.includes(toPress) ? 'r' : 'l'; // r - right hand (l - left)
-
-        this.keys.filter(`#shift-${side}`).addClass(this.keyTargetClass);
-      }
-
-      this.keys.filter(`#${toPress}`).addClass(this.keyTargetClass);
-
+    constructor(lettersService) {
+        this.keyboardContainerId = "keyboard-container";
+        this.lettersService = lettersService
+        this.lettersElements = {}
     }
 
-  }
+    updateColors() {
+        for (let letter in this.lettersElements) {
+            let score = this.lettersService.getScore(letter)
+            let hue = score * 120
+            this.lettersElements[letter].style.backgroundColor = "hsl(" + hue + ", 50%, 50%)"
+        }
+    }
+
+    generateKeyboard() {
+        let letters = this.lettersService.getAllLetters()
+
+        while (letters.length !== 0) {
+            let lineLetters = letters.slice(0, lineWidth)
+            letters = letters.slice(lineWidth, letters.length)
+
+            this._generateLine(lineLetters)
+        }
+    }
+
+    _generateLine(letters) {
+        let line = document.createElement("div");
+        line.className = "keyline"
+
+        letters.forEach(letter => {
+            let key = document.createElement("div")
+            key.className = "key"
+            key.id = letter
+            key.innerText = letter
+
+            line.appendChild(key)
+            this.lettersElements[letter] = key
+        })
+
+        document.getElementById(this.keyboardContainerId).appendChild(line)
+    }
 }

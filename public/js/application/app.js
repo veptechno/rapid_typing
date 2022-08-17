@@ -1,43 +1,22 @@
-import Wordline from '../wordline/wordline';
+import Keyboard from "../keyboard/keyboard";
+import LettersService from "../letters/letters_service";
+import WordGenerator from "../wordline/word_generator";
+import Wordline from "../wordline/wordline";
 
 export default class Application {
-  constructor() {
-    this.modeSelect = $('.mode-select');
-    this.modeTitle = $('.mode-title');
+    constructor() {
+        this.lettersService = new LettersService()
+        this.keyboard = new Keyboard(this.lettersService)
+        this.wordGenerator = new WordGenerator(this.lettersService)
+        this.wordLine = new Wordline(this.keyboard, this.wordGenerator, this.lettersService)
 
-    this.openClass = 'open';
+        this._init()
+    }
 
-    this.mode = 'novice';
+    _init() {
+        this.keyboard.generateKeyboard()
+        this.keyboard.updateColors()
 
-    this.setMode(this.mode);
-
-    this.bindEvents();
-  }
-
-  setMode(mode) {
-    this.modeTitle.html(mode.replace(/(\b\w)/, letter => letter.toUpperCase()));
-    this.wordline = new Wordline(mode);
-    this.wordline.setFocus();
-  }
-
-  bindEvents() {
-    this.modeSelect.click(e => {
-      e.stopPropagation();
-
-      this.modeSelect.toggleClass(this.openClass);
-    });
-
-    this.modeSelect.find('li').click(e => {
-      e.stopPropagation();
-
-      this.setMode( $(e.target).attr('id') );
-
-      this.modeSelect.removeClass(this.openClass);
-    });
-
-    $(document).click(e => {
-      this.modeSelect.removeClass(this.openClass);
-    });
-  }
-
+        this.wordLine.fill()
+    }
 }

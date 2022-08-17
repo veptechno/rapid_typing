@@ -10,9 +10,6 @@
 <body>
 
   <div class="container">
-
-    <a id="github" target="blank" href="https://github.com/Neest/rapid_typing">Fork me on github</a>
-
     <div class="topbar">
       <div class="speed-stats">
         <span>
@@ -52,131 +49,14 @@
         </span>
       </div>
     </div>
-    
-    <div class="keyboard-toolbar">
-      <i id="keyboard-toggle" class="tool ion-eye">
-        <span class="hint">Toggle keyboard</span>
-      </i>
-      <i id="hands-toggle" class="tool ion-android-hand">
-        <span class="hint">Toggle hands</span>
-      </i>
-      <i id="color-toggle" class="tool ion-paintbucket">
-        <span class="hint">Toggle colors</span>
-      </i>
-    </div>
 
-    <div class="keyboard-container">
-      <div class="keyline">
-        <div class="key group-1" id="`">`
-          <div class="subkey">~</div>
-        </div>
-        <div class="key group-1" id="1">1
-          <div class="subkey">!</div>
-        </div>
-        <div class="key group-2" id="2">2
-          <div class="subkey">@</div>
-        </div>
-        <div class="key group-3" id="3">3
-          <div class="subkey">#</div>
-        </div>
-        <div class="key group-4" id="4">4
-          <div class="subkey">$</div>
-        </div>
-        <div class="key group-4" id="5">5
-          <div class="subkey">%</div>
-        </div>
-        <div class="key group-5" id="6">6
-          <div class="subkey">^</div>
-        </div>
-        <div class="key group-5" id="7">7
-          <div class="subkey">&</div>
-        </div>
-        <div class="key group-6" id="8">8
-          <div class="subkey">*</div>
-        </div>
-        <div class="key group-7" id="9">9
-          <div class="subkey">(</div>
-        </div>
-        <div class="key group-8" id="0">0
-          <div class="subkey">)</div>
-        </div>
-        <div class="key group-8" id="underscore">_
-          <div class="subkey">-</div>
-        </div>
-        <div class="key group-8" id="equal">=
-          <div class="subkey">+</div>
-        </div>
-        <div class="key non-group" id="backspace">backspace</div>
-      </div>
-      <div class="keyline">
-        <div class="key non-group" id="tab">tab</div>
-        <div class="key group-1" id="q">q</div>
-        <div class="key group-2" id="w">w</div>
-        <div class="key group-3" id="e">e</div>
-        <div class="key group-4" id="r">r</div>
-        <div class="key group-4" id="t">t</div>
-        <div class="key group-5" id="y">y</div>
-        <div class="key group-5" id="u">u</div>
-        <div class="key group-6" id="i">i</div>
-        <div class="key group-7" id="o">o</div>
-        <div class="key group-8" id="p">p</div>
-        <div class="key group-8" id="[">[
-          <div class="subkey">{</div>
-        </div>
-        <div class="key group-8" id="]">]
-          <div class="subkey">}</div>
-        </div>
-        <div class="key group-8" id="\">\
-          <div class="subkey">|</div>
-        </div>
-      </div>
-      <div class="keyline">
-        <div class="key non-group" id="caps_lock">Caps Lock</div>
-        <div class="key group-1" id="a">a</div>
-        <div class="key group-2" id="s">s</div>
-        <div class="key group-3" id="d">d</div>
-        <div class="key group-4" id="f">f</div>
-        <div class="key group-4" id="g">g</div>
-        <div class="key group-5" id="h">h</div>
-        <div class="key group-5" id="j">j</div>
-        <div class="key group-6" id="k">k</div>
-        <div class="key group-7" id="l">l</div>
-        <div class="key group-8" id=";">;
-          <div class="subkey">:</div>
-        </div>
-        <div class="key group-8" id=""">"
-          <div class="subkey">,</div>
-        </div>
-        <div class="key non-group" id="enter">Enter</div>
-      </div>
-      <div class="keyline">
-        <div class="key group-1" id="shift-l">Shift</div>
-        <div class="key group-1" id="z">z</div>
-        <div class="key group-2" id="x">x</div>
-        <div class="key group-3" id="c">c</div>
-        <div class="key group-4" id="v">v</div>
-        <div class="key group-4" id="b">b</div>
-        <div class="key group-5" id="n">n</div>
-        <div class="key group-5" id="m">m</div>
-        <div class="key group-6" id="<"><
-          <div class="subkey">,</div>
-        </div>
-        <div class="key group-7" id=">">>
-          <div class="subkey">.</div>
-        </div>
-        <div class="key group-8" id="/">/
-          <div class="subkey">?</div>
-        </div>
-        <div class="key group-8" id="shift-r">shift</div>
-      </div>
-      <div class="keyline">
-        <div class="key" id="space"></div>
-      </div>
+    <div id="keyboard-container">
     </div>
   </div>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="js/utils/words.js"></script>
+  <script src="js/letters/letters.js"></script>
+  <script src="js/config.js"></script>
   <script src="build/build.js"></script>
 </body>
 </html>
