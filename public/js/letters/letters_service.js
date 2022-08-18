@@ -1,14 +1,18 @@
+import ErrorStats from "../wordline/error_stats";
+import SpeedStats from "../wordline/speed_stats";
+
 export default class LettersService {
 
     constructor() {
         this.letters = initialLetters;
+        this.errorStats = new ErrorStats()
+        this.speedStats = new SpeedStats()
 
-        this.lettersCorrectness = {}
-        this.lettersLatencyMs = {}
-        this.letters.forEach(letter => {
-            this.lettersCorrectness[letter] = Array(lettersServiceSize).fill(false)
-            this.lettersLatencyMs[letter] = Array(lettersServiceSize).fill(maxLetterLatencyMs)
-        })
+        this._load()
+        if (this.lettersLatencyMs === null || this.lettersCorrectness === null) {
+            this._init()
+        }
+        this._refresh()
     }
 
     getAllLetters() {
@@ -21,8 +25,13 @@ export default class LettersService {
             return
         }
 
+        if (latencyMs > maxLetterLatencyMs) {
+            latencyMs = maxLetterLatencyMs
+        }
+
         this.lettersLatencyMs[letter].shift()
         this.lettersLatencyMs[letter].push(latencyMs)
+        this._save()
     }
 
     setCorrectness(letter, correctness) {
@@ -33,6 +42,7 @@ export default class LettersService {
 
         this.lettersCorrectness[letter].shift()
         this.lettersCorrectness[letter].push(correctness)
+        this._save()
     }
 
     getWorstLetters(count) {
@@ -49,6 +59,34 @@ export default class LettersService {
         let latencyScore = this._getLatencyScore(letter)
         let correctnessScore = this._getCorrectnessScore(letter)
         return Math.sqrt(latencyScore * latencyScore + correctnessScore * correctnessScore) / Math.sqrt(2)
+    }
+
+    getAverageCorrectness() {
+        let sum = .0
+        let count = 0
+        for (let letter in this.lettersCorrectness) {
+            let trueCount = 0
+            this.lettersCorrectness[letter].forEach(correctness => {
+                if (correctness) trueCount++
+            })
+            sum += trueCount / this.lettersCorrectness[letter].length * 100
+            count++
+        }
+
+        return sum / count
+    }
+
+    getAverageLatencyMs() {
+        let sum = .0
+        let count = .0
+        for (let letter in this.lettersLatencyMs) {
+            this.lettersLatencyMs[letter].forEach(latencyMs => {
+                sum += latencyMs
+                count++
+            })
+        }
+
+        return sum / count / 1000.0
     }
 
     _getLatencyScore(letter) {
@@ -87,5 +125,30 @@ export default class LettersService {
         }
 
         return array;
+    }
+
+    _save() {
+        window.localStorage.setItem("lettersCorrectness", JSON.stringify(this.lettersCorrectness))
+        window.localStorage.setItem("lettersLatencyMs", JSON.stringify(this.lettersLatencyMs))
+        this._refresh()
+    }
+
+    _load() {
+        this.lettersCorrectness = JSON.parse(window.localStorage.getItem("lettersCorrectness"))
+        this.lettersLatencyMs = JSON.parse(window.localStorage.getItem("lettersLatencyMs"))
+    }
+
+    _init() {
+        this.lettersCorrectness = {}
+        this.lettersLatencyMs = {}
+        this.letters.forEach(letter => {
+            this.lettersCorrectness[letter] = Array(lettersServiceSize).fill(false)
+            this.lettersLatencyMs[letter] = Array(lettersServiceSize).fill(maxLetterLatencyMs)
+        })
+    }
+
+    _refresh() {
+        this.speedStats.updateAverage(this)
+        this.errorStats.updateAverage(this)
     }
 }

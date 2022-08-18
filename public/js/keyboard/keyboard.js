@@ -9,7 +9,7 @@ export default class Keyboard {
     updateColors() {
         for (let letter in this.lettersElements) {
             let score = this.lettersService.getScore(letter)
-            let hue = score * 120
+            let hue = score * 240
             this.lettersElements[letter].style.backgroundColor = "hsl(" + hue + ", 50%, 50%)"
         }
     }
