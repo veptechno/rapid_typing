@@ -21,8 +21,14 @@ export default class WordGenerator {
         let wordLength = this._rand(minWordLength, maxWordLength)
         let word = []
 
+        let previousLetter = ''
         for (let i = 0; i < wordLength; i++) {
-            word.push(this._randElement(letters))
+            let letter = previousLetter
+            while (letter === previousLetter) {
+                letter = this._randElement(letters)
+            }
+            word.push(letter)
+            previousLetter = letter
         }
 
         return word

@@ -9,9 +9,24 @@ export default class LettersService {
         this.speedStats = new SpeedStats()
 
         this._load()
-        if (this.lettersLatencyMs === null || this.lettersCorrectness === null) {
-            this._init()
-        }
+        let newLettersLatencyMs = {}
+        let newLettersCorrectness = {}
+        this.letters.forEach(letter => {
+            if (this.lettersCorrectness.hasOwnProperty(letter)) {
+                newLettersCorrectness[letter] = this.lettersCorrectness[letter]
+            } else {
+                newLettersCorrectness[letter] = Array(lettersServiceSize).fill(false)
+            }
+
+            if (this.lettersLatencyMs.hasOwnProperty(letter)) {
+                newLettersLatencyMs[letter] = this.lettersLatencyMs[letter]
+            } else {
+                newLettersLatencyMs[letter] = Array(lettersServiceSize).fill(maxLetterLatencyMs)
+            }
+        })
+        this.lettersLatencyMs = newLettersLatencyMs
+        this.lettersCorrectness = newLettersCorrectness
+
         this._refresh()
     }
 
@@ -57,8 +72,9 @@ export default class LettersService {
 
     getScore(letter) {
         let latencyScore = this._getLatencyScore(letter)
-        let correctnessScore = this._getCorrectnessScore(letter)
-        return Math.sqrt(latencyScore * latencyScore + correctnessScore * correctnessScore) / Math.sqrt(2)
+        let correctnessScore = this._getCorrectnessScore(letter) / 2
+        return Math.sqrt(latencyScore * latencyScore + correctnessScore * correctnessScore) / Math.sqrt(1.25)
+        // return latencyScore * correctnessScore * 2
     }
 
     getAverageCorrectness() {
@@ -97,7 +113,9 @@ export default class LettersService {
 
         let averageLatencyMs = this.lettersLatencyMs[letter].reduce((a, b) => a + b, 0) / this.lettersLatencyMs[letter].length
 
-        return 1 - averageLatencyMs / maxLetterLatencyMs
+        let lps = 60000 / averageLatencyMs
+        return (-0.000002406881 * lps * lps * lps  + 0.001766098485 * lps * lps - 0.073611111111 * lps + 0.636363636383) / 100
+        // return 1 - averageLatencyMs / maxLetterLatencyMs
     }
 
     _getCorrectnessScore(letter) {
@@ -136,15 +154,6 @@ export default class LettersService {
     _load() {
         this.lettersCorrectness = JSON.parse(window.localStorage.getItem("lettersCorrectness"))
         this.lettersLatencyMs = JSON.parse(window.localStorage.getItem("lettersLatencyMs"))
-    }
-
-    _init() {
-        this.lettersCorrectness = {}
-        this.lettersLatencyMs = {}
-        this.letters.forEach(letter => {
-            this.lettersCorrectness[letter] = Array(lettersServiceSize).fill(false)
-            this.lettersLatencyMs[letter] = Array(lettersServiceSize).fill(maxLetterLatencyMs)
-        })
     }
 
     _refresh() {
