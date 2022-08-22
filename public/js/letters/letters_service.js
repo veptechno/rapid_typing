@@ -73,14 +73,14 @@ export default class LettersService {
     getAverageCorrectness() {
         let sum = .0
         let count = 0
-        for (let letter in this.lettersCorrectness) {
+        this.letters.forEach(letter => {
             let trueCount = 0
             this.lettersCorrectness[letter].forEach(correctness => {
                 if (correctness) trueCount++
             })
             sum += trueCount / this.lettersCorrectness[letter].length * 100
             count++
-        }
+        })
 
         return sum / count
     }
@@ -88,12 +88,12 @@ export default class LettersService {
     getAverageLatencyMs() {
         let sum = .0
         let count = .0
-        for (let letter in this.lettersLatencyMs) {
+        this.letters.forEach(letter => {
             this.lettersLatencyMs[letter].forEach(latencyMs => {
                 sum += latencyMs
                 count++
             })
-        }
+        })
 
         return sum / count / 1000.0
     }
