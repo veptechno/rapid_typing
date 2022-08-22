@@ -64,8 +64,8 @@ export default class LettersService {
     }
 
     getScore(letter) {
-        let latencyScore = this._getLatencyScore(letter)
-        let correctnessScore = this._getCorrectnessScore(letter) / 2
+        let latencyScore = this._getLatencyScore(letter) / 2
+        let correctnessScore = this._getCorrectnessScore(letter)
         return Math.sqrt(latencyScore * latencyScore + correctnessScore * correctnessScore) / Math.sqrt(1.25)
         // return latencyScore * correctnessScore * 2
     }
