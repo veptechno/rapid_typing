@@ -35,11 +35,15 @@ export default class Wordline {
 
             let timeEnd = Date.now()
 
-            let letter = String.fromCharCode(e.charCode);
-            let isOk = this.check(letter);
+            let typedLetter = String.fromCharCode(e.charCode);
+            let pair = this.check(typedLetter);
+            let isOk = pair[0];
+            let lastLetter = pair[1];
 
-            this.lettersService.setLatencyMs(letter, timeEnd - this.timeStart)
-            this.lettersService.setCorrectness(letter, isOk)
+            if (isOk) {
+                this.lettersService.setLatencyMs(typedLetter, timeEnd - this.timeStart)
+            }
+            this.lettersService.setCorrectness(lastLetter, isOk)
 
             if (!isOk) {
                 this.letters.length ? this.highlightMistake() : this.fill();
@@ -78,24 +82,26 @@ export default class Wordline {
         this.letters = [];
         this.wordline.text('');
         this.inputline.val('');
+        this.active = false;
     }
 
     check(letter) {
         let untyped = $(`.${this.untypedClass}`);
 
         let output = false;
+        let lastLetter = untyped.eq(0).text()
 
-        if (letter == untyped.eq(0).text()) {
+        if (letter === lastLetter) {
             untyped.eq(0).removeClass(this.untypedClass);
             output = true;
         }
 
-        if (untyped.length == 0 && letter == ' ') {
+        if (untyped.length === 0 && letter === ' ') {
             output = false
             this.clean();
         }
 
-        return output;
+        return [output, lastLetter];
     }
 
     fill() {
