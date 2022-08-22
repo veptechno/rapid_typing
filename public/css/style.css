@@ -61,9 +61,7 @@ body {
   display: inline-block;
 }
 
-.wordline,
-.inputline {
-  /*min-width: calc(55px * 15.5);*/
+.wordline {
   text-align: center;
 }
 
