@@ -41,7 +41,7 @@ export default class Wordline {
             let lastLetter = pair[1];
 
             if (isOk) {
-                this.lettersService.setLatencyMs(typedLetter, timeEnd - this.timeStart)
+                this.lettersService.setLatencyMs(lastLetter, timeEnd - this.timeStart)
             }
             this.lettersService.setCorrectness(lastLetter, isOk)
 
