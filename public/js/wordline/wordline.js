@@ -28,9 +28,11 @@ export default class Wordline {
         this.inputline.off();
 
         this.inputline.keypress(e => {
-            if (!this.active && e.keyCode === 13) {
+            let activated = false;
+
+            if (!this.active) {
                 this.activate()
-                return false
+                activated = true
             }
 
             let timeEnd = Date.now()
@@ -40,7 +42,7 @@ export default class Wordline {
             let isOk = pair[0];
             let lastLetter = pair[1];
 
-            if (isOk) {
+            if (isOk && !activated) {
                 this.lettersService.setLatencyMs(lastLetter, timeEnd - this.timeStart)
             }
             this.lettersService.setCorrectness(lastLetter, isOk)
