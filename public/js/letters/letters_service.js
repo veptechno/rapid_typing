@@ -9,23 +9,16 @@ export default class LettersService {
         this.speedStats = new SpeedStats()
 
         this._load()
-        let newLettersLatencyMs = {}
-        let newLettersCorrectness = {}
+
         this.letters.forEach(letter => {
-            if (this.lettersCorrectness.hasOwnProperty(letter)) {
-                newLettersCorrectness[letter] = this.lettersCorrectness[letter]
-            } else {
-                newLettersCorrectness[letter] = Array(lettersServiceSize).fill(false)
+            if (!this.lettersCorrectness.hasOwnProperty(letter)) {
+                this.lettersCorrectness[letter] = Array(lettersServiceSize).fill(false)
             }
 
-            if (this.lettersLatencyMs.hasOwnProperty(letter)) {
-                newLettersLatencyMs[letter] = this.lettersLatencyMs[letter]
-            } else {
-                newLettersLatencyMs[letter] = Array(lettersServiceSize).fill(maxLetterLatencyMs)
+            if (!this.lettersLatencyMs.hasOwnProperty(letter)) {
+                this.lettersLatencyMs[letter] = Array(lettersServiceSize).fill(maxLetterLatencyMs)
             }
         })
-        this.lettersLatencyMs = newLettersLatencyMs
-        this.lettersCorrectness = newLettersCorrectness
 
         this._refresh()
     }
@@ -154,6 +147,14 @@ export default class LettersService {
     _load() {
         this.lettersCorrectness = JSON.parse(window.localStorage.getItem("lettersCorrectness"))
         this.lettersLatencyMs = JSON.parse(window.localStorage.getItem("lettersLatencyMs"))
+
+        if (this.lettersCorrectness === null) {
+            this.lettersCorrectness = {}
+        }
+
+        if (this.lettersLatencyMs === null) {
+            this.lettersLatencyMs = {}
+        }
     }
 
     _refresh() {
