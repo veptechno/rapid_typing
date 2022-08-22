@@ -63,7 +63,8 @@ body {
 
 .wordline,
 .inputline {
-  min-width: calc(55px * 15.5);
+  /*min-width: calc(55px * 15.5);*/
+  text-align: center;
 }
 
 .inputline {
