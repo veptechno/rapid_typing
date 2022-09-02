@@ -1,16 +1,17 @@
 
-import Keyboard from '../keyboard/keyboard';
+import Keyboard from '../keyboard/speed_keyboard';
 import WordGenerator from "./word_generator";
 
 export default class Wordline {
-    constructor(keyboard, generator, lettersService) {
+    constructor(speedKeyboard, correctnessKeyboard, generator, lettersService) {
 
         this.inputline = $('.inputline');
         this.wordline = $('.wordline');
 
         this.inputline.val('')
 
-        this.keyboard = keyboard;
+        this.speedKeyboard = speedKeyboard;
+        this.correctnessKeyboard = correctnessKeyboard;
         this.generator = generator;
         this.lettersService = lettersService;
         this.letters = '';
@@ -52,7 +53,8 @@ export default class Wordline {
             }
 
             this.timeStart = Date.now();
-            this.keyboard.updateColors()
+            this.speedKeyboard.updateColors()
+            this.correctnessKeyboard.updateColors()
 
             return isOk
         });

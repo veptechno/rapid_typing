@@ -1,14 +1,14 @@
-export default class Keyboard {
+export default class SpeedKeyboard {
 
     constructor(lettersService) {
-        this.keyboardContainerId = "keyboard-container";
+        this.keyboardContainerId = "speed-keyboard-container";
         this.lettersService = lettersService
         this.lettersElements = {}
     }
 
     updateColors() {
         for (let letter in this.lettersElements) {
-            let score = this.lettersService.getScore(letter)
+            let score = this.lettersService._getLatencyScore(letter)
             let hue = score * 240
             this.lettersElements[letter].style.backgroundColor = "hsl(" + hue + ", 50%, 50%)"
         }

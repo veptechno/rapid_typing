@@ -1,51 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Rapid Typing</title>
-  <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>Rapid Typing</title>
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <div class="container">
+<div class="container">
     <div class="topbar">
-      <div class="speed-stats">
+        <div class="speed-stats">
         <span>
           <div class="stats-hint">Speed stats</div>
           <i class="ion-speedometer"></i>
         </span>
-        <span class="average-ms">376</span>
-        <span>/</span>
-        <span class="speed-average">321</span>
-      </div>
+            <span class="average-ms">376</span>
+            <span>/</span>
+            <span class="speed-average">321</span>
+        </div>
 
-      <div class="error-stats">
+        <div class="error-stats">
         <span>
           <div class="stats-hint">Error stats</div>
           <i class="ion-bug"></i>
         </span>
-        <span class="error-average"></span>
-      </div>
+            <span class="error-average"></span>
+        </div>
     </div>
 
     <div class="wordline-container">
-      <input class="inputline" type="text" spellcheck="false" autofocus/>
-      <div class="wordline">
-        <span class="placeholder">Words are coming... 
+        <input class="inputline" type="text" spellcheck="false" autofocus/>
+        <div class="wordline">
+        <span class="placeholder">Words are coming...
           <img src="img/wait.gif">
         </span>
-      </div>
+        </div>
     </div>
 
-    <div id="keyboard-container">
+    <div id="keyboards">
+        <div>
+            <h3>Latency</h3>
+
+            <div id="speed-keyboard-container">
+            </div>
+        </div>
+
+        <div>
+            <h3>Correctness</h3>
+
+            <div id="correctness-keyboard-container">
+            </div>
+        </div>
     </div>
-  </div>
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="js/letters/letters.js"></script>
-  <script src="js/config.js"></script>
-  <script src="build/build.js"></script>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="js/letters/letters.js"></script>
+<script src="js/config.js"></script>
+<script src="build/build.js"></script>
 </body>
 </html>
