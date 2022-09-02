@@ -258,8 +258,12 @@ span.untyped.wrong {
 #keyboards {
     display: flex;
     flex-direction: row;
-    width: 100vw;
     justify-content: space-evenly;
+}
+
+#keyboards > div {
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 h3 {
