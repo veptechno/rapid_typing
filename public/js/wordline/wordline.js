@@ -1,7 +1,3 @@
-
-import Keyboard from '../keyboard/speed_keyboard';
-import WordGenerator from "./word_generator";
-
 export default class Wordline {
     constructor(speedKeyboard, correctnessKeyboard, generator, lettersService) {
 
@@ -38,6 +34,8 @@ export default class Wordline {
 
             let timeEnd = Date.now()
 
+            console.log(timeEnd - this.timeStart)
+
             let typedLetter = String.fromCharCode(e.charCode);
             let pair = this.check(typedLetter);
             let isOk = pair[0];
@@ -60,7 +58,7 @@ export default class Wordline {
         });
 
         this.inputline.keydown(e => {
-            if(e.keyCode === 8) {
+            if (e.keyCode === 8) {
                 return false
             }
         })
@@ -112,8 +110,12 @@ export default class Wordline {
         this.letters = this.generator.generate().join(' ');
 
         let markup = '';
-        for (let letter of this.letters)
-            markup += `<span class="untyped letter">${letter}</span>`
+        for (let letter of this.letters) {
+            if (cyrillic.includes(letter) || cyrillicCapital.includes(letter))
+                markup += `<span class="untyped letter ru">${letter}</span>`
+            else
+                markup += `<span class="untyped letter">${letter}</span>`
+        }
 
         this.wordline.html(markup);
 

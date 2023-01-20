@@ -84,6 +84,10 @@ span.untyped {
     color: #3d3d3d;
 }
 
+span.ru {
+    color: #729FCF;
+}
+
 span.untyped.wrong {
     color: red !important;
 }
